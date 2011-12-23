@@ -52,8 +52,8 @@ def get_zmanim(zipcode, date):
 
 def main():
     parser = optparse.OptionParser(usage="usage: %prog ZIPCODE")
-    parser.add_option('--date', dest='date', help='Date in yyyy-mm-dd (default today)')
-    parser.add_option('--tmrw', dest='tomorrow', help='Zmanim for tomorrow (overrides --date)',
+    parser.add_option('-d', '--date', dest='date', help='Date in yyyy-mm-dd (default today)')
+    parser.add_option('-t', '--tomorrow', dest='tomorrow', help='Date of tomorrow (overrides --date)',
             action='store_true')
     options, args = parser.parse_args()
 
