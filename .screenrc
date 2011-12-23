@@ -1,0 +1,85 @@
+# this was jfennell's, it's been passed from hand to hand for a long time
+# fix backspace
+bindkey -d ^? stuff ^H
+bindkey -d ^@ stuff ^H
+
+shell -bash
+escape ^Tt
+
+# fix scrolback
+termcapinfo xterm ti@:te@
+termcapinfo xterm-color ti!:te@
+altscreen on
+
+# Autodetach on hangup (e.g. if the terminal emulator accidentally dies)
+autodetach on
+
+# don't display the copyright page
+startup_message off
+
+# Change default scrollback value for new windows
+defscrollback 50000
+
+# Affects the copying of text regions
+crlf off
+
+# Ignore Ctrl-S/Ctrl-Q style flow control, since I hit Ctrl-S a lot in vi when
+# I'm going for Ctrl-W
+defflow off
+
+# Enable/disable multiuser mode. Standard screen operation is singleuser.
+# In multiuser mode the commands acladd, aclchg, aclgrp and acldel can be used
+# to enable (and disable) other user accessing this screen session.
+# Requires suid-root.
+multiuser off
+
+# turn on the visual bell
+vbell on
+vbell_msg "   -- Bell,Bell!! --   "   # default: "Wuff,Wuff!!"
+
+# Add export PS1='\[\033k\033\\\]' to the front part of your PS1 and then make
+# your bash prompt end with "$ " and screen will automatically change window
+# titles for you
+shelltitle "$ |bash"
+
+# SCREEN CAPTION -- the status shown at the bottom of the window
+#
+# This is my modification of the original, that places the status bar items in the order
+# (windows list) --- hfill --- | load | Date Time
+# I am not 100% satisfied with it because it actually has an extra space before the hfill
+# in orer to prevent selecting the last window from highlighting the whole horizontal
+# fill block, but it is still pretty good and not too noticeable
+caption always "%{Yb}[ %H ]%{W} %-w%{+u}%n %t%{-u}%+w%{-u} %-=%{k}|%{G} %l %{k}|%{Y} %D %Y-%02m-%02d %0c"
+
+# emulate .logout message
+pow_detach_msg "Screen session of \$LOGNAME \$:cr:\$:nl:ended."
+
+# Define the time that all windows monitored for silence should
+# wait before displaying a message. Default 30 seconds.
+silencewait 15            # default: 30
+
+# Let's remove some dangerous key bindings ...
+bind k
+bind ^k
+bind .
+bind ^h
+bind h
+bind s
+
+# ... and make them better.
+bind 'K' kill
+bind 'I' login on
+bind 'O' login off
+bind '}' history
+
+# Resize the current region. The space will be removed from or added to
+# the region below or if there's not enough space from the region above.
+bind = resize =
+bind + resize +3
+bind - resize -3
+
+# Uncomment one/some following lines to automatically let
+# SCREEN start some programs in the given window numbers:
+#screen -t sys01       0
+#screen -t dev01       1 ssh root@dev01
+#screen -t dev02       2 ssh root@dev02

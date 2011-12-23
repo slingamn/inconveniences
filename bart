@@ -1,0 +1,117 @@
+#!/usr/bin/python
+
+"""
+BART departure times from the command line. Use it like this:
+
+bart # departure times for Powell St, POWL
+bart 24th # departure times for 24th and Mission
+bart nbrk # departure times for North Berkeley
+"""
+
+import sys
+import optparse
+from xml.dom import minidom
+import urllib2
+
+BART_DATA_URL = "http://www.bart.gov/dev/eta/bart_eta.xml"
+
+abbr_to_name = \
+{u'12TH': u'12th St. Oakland City Center',
+ u'16TH': u'16th St. Mission',
+ u'19TH': u'19th St. Oakland',
+ u'24TH': u'24th St. Mission',
+ u'ASHB': u'Ashby',
+ u'BALB': u'Balboa Park',
+ u'BAYF': u'Bay Fair',
+ u'CAST': u'Castro Valley',
+ u'CIVC': u'Civic Center',
+ u'COLM': u'Colma',
+ u'COLS': u'Coliseum/Oakland Airport',
+ u'CONC': u'Concord',
+ u'DALY': u'Daly City',
+ u'DBRK': u'Downtown Berkeley',
+ u'DELN': u'El Cerrito del Norte',
+ u'DUBL': u'Dublin/Pleasanton',
+ u'EMBR': u'Embarcadero',
+ u'FRMT': u'Fremont',
+ u'FTVL': u'Fruitvale',
+ u'GLEN': u'Glen Park',
+ u'HAYW': u'Hayward',
+ u'LAFY': u'Lafayette',
+ u'LAKE': u'Lake Merritt',
+ u'MCAR': u'MacArthur',
+ u'MLBR': u'Millbrae',
+ u'MONT': u'Montgomery St.',
+ u'NBRK': u'North Berkeley',
+ u'NCON': u'North Concord/Martinez',
+ u'ORIN': u'Orinda',
+ u'PHIL': u'Pleasant Hill',
+ u'PITT': u'Pittsburg/Bay Point',
+ u'PLZA': u'El Cerrito Plaza',
+ u'POWL': u'Powell St.',
+ u'RICH': u'Richmond',
+ u'ROCK': u'Rockridge',
+ u'SANL': u'San Leandro',
+ u'SBRN': u'San Bruno',
+ u'SFIA': u"San Francisco Int'l Airport",
+ u'SHAY': u'South Hayward',
+ u'SSAN': u'South San Francisco',
+ u'UCTY': u'Union City',
+ u'WCRK': u'Walnut Creek',
+ u'WOAK': u'West Oakland'}
+
+def unpack_text(element, tagname):
+    """XML is insane."""
+    return element.getElementsByTagName(tagname)[0].firstChild.data
+
+def get_station_to_status():
+    """Turn the XML feed into a JSON dict."""
+
+    doc = urllib2.urlopen(BART_DATA_URL)
+    dom = minidom.parse(doc)
+
+    station_to_status = {}
+    for elem in dom.documentElement.getElementsByTagName('station'):
+        try:
+            station_abbr, _station_name, station_time = \
+                [unpack_text(elem, name) for name in ('abbr', 'name', 'time')]
+        except AttributeError:
+            #XXX sometimes the API returns a borked station, ignore
+            continue
+
+        station_rec = {'station_abbr': station_abbr, 'time': station_time, 'eta': {}}
+        for status in elem.getElementsByTagName('eta'):
+            dest = unpack_text(status, 'destination')
+            estimate = unpack_text(status, 'estimate')
+            estimate_pieces = [piece.split(" ")[0] for piece in estimate.split(", ")]
+            estimate_times = [int(piece) if piece != "Leaving" else 0 for piece in estimate_pieces]
+            station_rec['eta'][dest] = estimate_times
+            station_to_status[station_abbr] = station_rec
+
+    return station_to_status
+
+def main():
+    parser = optparse.OptionParser(usage="usage: %prog STATION")
+    (_options, args) = parser.parse_args()
+
+    station = args[0].upper() if len(args) > 0 else 'POWL'
+    humanreadable_station = abbr_to_name.get(station)
+    if not humanreadable_station:
+        print >>sys.stderr, "Unrecognized abbreviation %s." % (station,)
+        return 1
+
+    station_to_status = get_station_to_status()
+    status = station_to_status.get(station)
+    if status is None:
+        print "No departure times for %s available." % (humanreadable_station,)
+        return 0
+
+    # padding was eklitzke's idea. thanks!
+    max_dest_len = max(len(dest) for dest in status['eta'].iterkeys())
+    print "Departure times for %s (as of %s)" % (humanreadable_station, status['time'])
+    for dest, times in status['eta'].iteritems():
+        print "%-*s  %s" % (max_dest_len, dest, " mins, ".join(str(time) for time in times) + " mins")
+    return 0
+
+if __name__ == '__main__':
+    sys.exit(main())

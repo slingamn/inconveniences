@@ -1,0 +1,81 @@
+#!/usr/bin/python
+
+"""
+Get zmanim from the command line, so you can be makpid about the zmanim you are
+makpid about :-)
+
+Use it like this:
+
+zmanim 94110 # zip code
+zmanim --date 2012-01-01 94110
+
+We are advised not to rely on zmanim down to the minute, also to be cautious of
+issues with Daylight Savings Time.
+"""
+
+import sys
+import datetime
+import optparse
+import urllib
+import urllib2
+import HTMLParser
+from xml.dom import minidom
+
+ZMANIM_URL = "http://www.chabad.org/tools/rss/zmanim.xml?%s"
+DEFAULT_ZIP = '94703'
+
+HTMLPARSER = HTMLParser.HTMLParser()
+
+def unpack_text(element, tagname):
+    """XML is insane."""
+    return element.getElementsByTagName(tagname)[0].firstChild.data
+
+def get_zmanim(zipcode, date):
+    """Zipcode is a string or int, date is a datetime.date."""
+    parameters = {'z': zipcode, 'tDate': date.strftime('%m/%d/%Y')}
+    zmanim_url = ZMANIM_URL % (urllib.urlencode(parameters),)
+    doc = urllib2.urlopen(zmanim_url)
+    dom = minidom.parse(doc)
+
+    result = {}
+    result['title'] = unpack_text(dom.documentElement, 'title')
+    # array of pairs ('Shkiah', '5:56 PM')
+    result['zmanim'] = []
+
+    for item in dom.documentElement.getElementsByTagName('item'):
+        raw_zman = unpack_text(item, 'title')
+        zman, time, _date = \
+                [piece.strip() for piece in raw_zman.split('-') if piece.strip()]
+        result['zmanim'].append((HTMLPARSER.unescape(zman), time))
+
+    return result
+
+def main():
+    parser = optparse.OptionParser()
+    parser.add_option('--date', dest='date', help='Date in yyyy-mm-dd (default today)')
+    parser.add_option('--tmrw', dest='tomorrow', help='Zmanim for tomorrow (overrides --date)',
+            action='store_true')
+    options, args = parser.parse_args()
+
+    zipcode = args[0] if len(args) >= 1 else DEFAULT_ZIP
+
+    if options.tomorrow:
+        date = datetime.date.today() + datetime.timedelta(days=1)
+    elif options.date:
+        date = datetime.datetime.strptime(options.date, '%Y-%m-%d').date()
+    else:
+        date = datetime.date.today()
+
+    data = get_zmanim(zipcode, date)
+
+    print data['title']
+    print
+
+    max_label_length = max(len(zman) for zman, time in data['zmanim'])
+    for zman, time in data['zmanim']:
+        print "%-*s  %s" % (max_label_length, zman, time)
+
+    return 0
+
+if __name__ == '__main__':
+    sys.exit(main())
