@@ -1,0 +1,103 @@
+#!/usr/bin/python
+
+"""
+Pointless client for time.gov's timestamp service
+(the backend for the time.gov webpage). To get the
+timestamp itself (UTC milliseconds since the epoch),
+you can just do:
+
+nc time.gov 8013
+
+Originally I wanted a command-line clock that would
+get the time from time.gov, so I could set my wristwatch
+without using a browser. But the writeup here:
+
+http://www.nist.gov/calibrations/upload/sp250-59.pdf
+
+says that this service is not incredibly accurate anyway.
+So this will serve to confirm that the system time is accurate
+to within a second, at which point I can set my wristwatch using:
+
+xclock -digital -update 1
+
+or some analogue.
+"""
+
+import time
+import socket
+import sys
+
+SERVER = 'time.gov'
+PORT = 8013
+MSGLEN = 32
+
+def print_aligned_table(table):
+    """Prints a list of lists, aligning the columns."""
+    # compute maximum field length for the first n-1 columns
+    num_cols = None
+    max_lens = None
+    for row in table:
+        if num_cols is None:
+            num_cols = len(row)
+            max_lens = [0] * num_cols
+        else:
+            assert len(row) == num_cols
+
+        for i in xrange(num_cols):
+            max_lens[i] = max(max_lens[i], len(str(row[i])))
+
+    # gross
+    format_string = ' '.join(['%-*s'] * num_cols)
+    format_params = [None] * (2 * num_cols)
+    for row in table:
+        for i in xrange(num_cols):
+            format_params[2*i] = max_lens[i]
+            format_params[2*i + 1] = row[i]
+        print format_string % tuple(format_params)
+
+def main():
+    if '--help' in sys.argv[1:]:
+        print 'Usage: %s' % (sys.argv[0],)
+        return 0
+
+    output = []
+    server = socket.gethostbyname(SERVER)
+    output.append(('Host', SERVER,))
+    output.append(('IP', server,))
+
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    try:
+        time_before = time.time()
+        s.connect((server, PORT))
+        remote_time = s.recv(MSGLEN)
+        time_after = time.time()
+    finally:
+        s.shutdown(socket.SHUT_RDWR)
+        s.close()
+
+    remote_time_msec = int(remote_time)
+    output.append(('Server timestamp (UTC msec)', remote_time_msec))
+
+    time_before_msec = time_before * 1000.0
+    time_after_msec = time_after * 1000.0
+    roundtrip = time_after_msec - time_before_msec
+    output.append(('Round-trip (msec)', '%.0f' % (roundtrip,)))
+
+    # estimate that the server produced the timestamp exactly halfway
+    # through the network delay:
+    estimated_local = time_before_msec + roundtrip/2.0
+    estimated_difference = abs(remote_time_msec - estimated_local)
+    output.append(("Est. diff. from system (msec)", "%.0f" % (estimated_difference,)))
+
+    # let t_0 be time_before and t_1 be time_after, let r be remote_time,
+    # let t be the local time at which r was generated.
+    # t_0 <= t <= t_1 implies (t_0 - r) <= (t - r) <= (t_1 - r),
+    # so |t - r| <= max(|t_0 - r|, |t_1 - r|)
+    max_difference = max(abs(remote_time_msec - time_before_msec),
+            abs(remote_time_msec - time_after_msec))
+    output.append(("Max. diff. from system (msec)", "%.0f" % (max_difference,)))
+
+    print_aligned_table(output)
+
+if __name__ == '__main__':
+    sys.exit(main())
