@@ -33,7 +33,7 @@ MSGLEN = 32
 
 def print_aligned_table(table):
     """Prints a list of lists, aligning the columns."""
-    # compute maximum field length for the first n-1 columns
+    # compute maximum field length for each column
     num_cols = None
     max_lens = None
     for row in table:
