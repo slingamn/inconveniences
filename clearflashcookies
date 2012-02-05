@@ -1,5 +1,5 @@
 #!/bin/sh
 # deletes the hell out of your flash cookies
 
-rm -r ~/.macromedia/Flash_Player/macromedia.com/support/flashplayer/sys/*
-rm -r ~/.macromedia/Flash_Player/#SharedObjects/*
+rm -rv ~/.macromedia/Flash_Player/macromedia.com/support/flashplayer/sys/*
+rm -rv ~/.macromedia/Flash_Player/#SharedObjects/*
