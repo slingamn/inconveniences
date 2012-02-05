@@ -1,0 +1,8 @@
+#!/bin/sh -e
+# sync the time with a NIST server; make lots of noise;
+# sync the hardware clock; launch xclock so I can sync my wristwatch
+
+NTPSERVER=${1-nist1-sj.ustiming.org}
+sudo ntpdate -v $NTPSERVER
+sudo hwclock --systohc --debug
+xclock -digital -update 1 & &> /dev/null
