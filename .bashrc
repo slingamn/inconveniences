@@ -11,6 +11,8 @@ alias gsd='git stash drop'
 # and soar lazily into the recycle bin:
 alias stashdrop='git stash && git stash drop'
 
+alias mtop='top -c -u $USER'
+
 # "git branch diff"
 function gitbd {
 	REMOTE=`git remote | head -n 1`
