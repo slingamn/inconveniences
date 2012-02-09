@@ -21,7 +21,7 @@ function gitbd {
 
 # hackish analogue to Alt-F2 "run" in gnome shell
 function run {
-	$@ & &> /dev/null
+	$@ &> /dev/null &
 }
 
 PATH=$PATH:~/Scripts
