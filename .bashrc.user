@@ -1,4 +1,7 @@
-## END provided .bashrc, begin customizations
+## put this at the end of .bashrc:
+#if [ -f ~/.bashrc.user ]; then
+#	source ~/.bashrc.user
+#fi
 
 # prompt with full directory name
 PS1="[\u@\h \w]\$ "
