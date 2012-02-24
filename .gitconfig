@@ -1,0 +1,7 @@
+[color]
+	ui = auto
+[user]
+	name = Shivaram Lingamneni
+	email = slingamn@cs.stanford.edu
+[push]
+	default = current
