@@ -7,3 +7,7 @@ shivaram ALL=(ALL) NOPASSWD:/usr/sbin/ntpdate
 shivaram ALL=(ALL) NOPASSWD:/usr/sbin/openvpn
 shivaram ALL=(ALL) NOPASSWD:/usr/bin/yum
 shivaram ALL=(ALL) NOPASSWD:/usr/bin/less
+
+## (for the Ubuntu machines)
+shivaram ALL=(ALL) NOPASSWD:/sbin/hwclock
+shivaram ALL=(ALL) NOPASSWD:/usr/bin/apt-get
