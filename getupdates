@@ -1,0 +1,22 @@
+#!/bin/bash
+# updates packages; tries yum first, then apt-get
+
+function command_exists {
+	# http://stackoverflow.com/questions/592620/check-if-a-program-exists-from-a-bash-script
+	type $1 &> /dev/null
+}
+
+if command_exists yum ;
+then
+	sudo yum update --changelog
+	exit $?
+fi
+
+if command_exists apt-get ;
+then
+	sudo apt-get update && sudo apt-get dist-upgrade
+	exit $?
+fi
+
+echo "Couldn't find yum or apt-get, exiting." 1>&2;
+exit 1
