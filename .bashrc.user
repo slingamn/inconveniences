@@ -19,12 +19,12 @@ alias mtop='top -c -u $USER'
 # "git branch diff"
 function gitbd {
 	REMOTE=`git remote | head -n 1`
-	git diff $REMOTE/master...HEAD $@
+	git diff $REMOTE/master...HEAD "$@"
 }
 
 # hackish analogue to Alt-F2 "run" in gnome shell
 function run {
-	$@ &> /dev/null &
+	"$@" &> /dev/null &
 }
 
 PATH=$PATH:~/Scripts
