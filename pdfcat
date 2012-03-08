@@ -1,0 +1,6 @@
+#!/bin/sh
+# concatenate PDFs using ghostscript, send the output to stdout
+# http://doeidoei.wordpress.com/2009/04/12/easy-way-to-concatenate-pdf-files-in-ubuntu-linux/
+# pdftk is probably better, but gs seems more widely available
+
+exec gs -q -sPAPERSIZE=letter -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -sOutputFile=- $@
