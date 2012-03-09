@@ -27,4 +27,4 @@ function run {
 	"$@" &> /dev/null &
 }
 
-PATH=$PATH:~/Scripts
+PATH=$PATH:~/bin
