@@ -24,6 +24,9 @@ from xml.dom import minidom
 ZMANIM_URL = "http://www.chabad.org/tools/rss/zmanim.xml?%s"
 DEFAULT_ZIP = '94703'
 
+LIGHTING = "Candle Lighting"
+SHABBAT_ENDS = "Shabbat Ends"
+
 HTMLPARSER = HTMLParser.HTMLParser()
 
 def unpack_text(element, tagname):
@@ -50,16 +53,35 @@ def get_zmanim(zipcode, date):
 
     return result
 
+def print_shabbat_times(zipcode):
+    """Just print the upcoming lighting time and Shabbat end time."""
+    today = datetime.date.today()
+    # friday is day 4 in Python (starts with Monday=0)
+    next_friday = today + datetime.timedelta(days=(4-today.weekday()))
+    next_saturday = next_friday + datetime.timedelta(days=1)
+    friday_zmanim = get_zmanim(zipcode, next_friday)
+    saturday_zmanim = get_zmanim(zipcode, next_saturday)
+    padding = max(len(LIGHTING), len(SHABBAT_ENDS))
+    print friday_zmanim['title']
+    print "%-*s %s" % (padding, LIGHTING, dict(friday_zmanim['zmanim'])[LIGHTING])
+    print saturday_zmanim['title']
+    print "%-*s %s" % (padding, SHABBAT_ENDS, dict(saturday_zmanim['zmanim'])[SHABBAT_ENDS])
+
 def main():
     parser = optparse.OptionParser(usage="usage: %prog ZIPCODE")
     parser.add_option('-d', '--date', dest='date', help='Date in yyyy-mm-dd (default today)')
     parser.add_option('-t', '--tomorrow', dest='tomorrow', help='Date of tomorrow (overrides --date)',
             action='store_true')
+    parser.add_option('--shabbat', dest='shabbat', action='store_true',
+            help='Get start and end times for the upcoming Shabbat (overrides other options)')
     options, args = parser.parse_args()
 
     zipcode = args[0] if len(args) >= 1 else DEFAULT_ZIP
 
-    if options.tomorrow:
+    if options.shabbat:
+        print_shabbat_times(zipcode)
+        return 0
+    elif options.tomorrow:
         date = datetime.date.today() + datetime.timedelta(days=1)
     elif options.date:
         date = datetime.datetime.strptime(options.date, '%Y-%m-%d').date()
