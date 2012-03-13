@@ -1,0 +1,5 @@
+#!/bin/sh
+# less, but with editor and shell access disabled
+# intended use: install to /usr/local/bin/less, add to sudoers
+
+LESSSECURE=1 exec less "$@"
