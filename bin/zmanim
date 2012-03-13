@@ -72,7 +72,7 @@ def main():
     parser.add_option('-d', '--date', dest='date', help='Date in yyyy-mm-dd (default today)')
     parser.add_option('-t', '--tomorrow', dest='tomorrow', help='Date of tomorrow (overrides --date)',
             action='store_true')
-    parser.add_option('--shabbat', dest='shabbat', action='store_true',
+    parser.add_option('-s', '--shabbat', dest='shabbat', action='store_true',
             help='Get start and end times for the upcoming Shabbat (overrides other options)')
     options, args = parser.parse_args()
 
