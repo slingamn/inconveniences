@@ -57,7 +57,8 @@ def print_shabbat_times(zipcode):
     """Just print the upcoming lighting time and Shabbat end time."""
     today = datetime.date.today()
     # friday is day 4 in Python (starts with Monday=0)
-    next_friday = today + datetime.timedelta(days=(4-today.weekday()))
+    days_until_friday = (4 - today.weekday()) % 7
+    next_friday = today + datetime.timedelta(days=days_until_friday)
     next_saturday = next_friday + datetime.timedelta(days=1)
     friday_zmanim = get_zmanim(zipcode, next_friday)
     saturday_zmanim = get_zmanim(zipcode, next_saturday)
