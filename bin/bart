@@ -68,7 +68,10 @@ def get_station_to_status():
     """Turn the XML feed into a JSON dict."""
 
     doc = urllib2.urlopen(BART_DATA_URL)
-    dom = minidom.parse(doc)
+    try:
+        dom = minidom.parse(doc)
+    finally:
+        doc.close()
 
     station_to_status = {}
     for elem in dom.documentElement.getElementsByTagName('station'):

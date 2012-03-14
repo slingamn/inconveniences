@@ -38,7 +38,10 @@ def get_zmanim(zipcode, date):
     parameters = {'z': zipcode, 'tDate': date.strftime('%m/%d/%Y')}
     zmanim_url = ZMANIM_URL % (urllib.urlencode(parameters),)
     doc = urllib2.urlopen(zmanim_url)
-    dom = minidom.parse(doc)
+    try:
+        dom = minidom.parse(doc)
+    finally:
+        doc.close()
 
     result = {}
     result['title'] = unpack_text(dom.documentElement, 'title')
