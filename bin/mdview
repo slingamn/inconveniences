@@ -1,0 +1,6 @@
+#!/bin/sh -e
+# simple Markdown previewer
+
+TEMPFILE=`mktemp`
+Markdown.pl "$@" > $TEMPFILE
+google-chrome $TEMPFILE &> /dev/null &
