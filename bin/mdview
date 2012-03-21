@@ -1,19 +1,6 @@
 #!/bin/bash -e
 # simple Markdown previewer
 
-function command_exists {
-	# http://stackoverflow.com/questions/592620/check-if-a-program-exists-from-a-bash-script
-	type $1 &> /dev/null
-}
-
-# there doesn't seem to be a consistent standard for getting the "default browser":
-# just try all the ones I'm likely to be using
-if command_exists google-chrome; then BROWSER="google-chrome";
-elif command_exists chromium-browser; then BROWSER="chromium-browser";
-elif command_exists firefox; then BROWSER="firefox";
-else echo "Couldn't find a browser."  1>&2; exit 1;
-fi
-
 TEMPFILE=`mktemp`
 Markdown.pl "$@" > $TEMPFILE
-$BROWSER $TEMPFILE &> /dev/null &
+`getbest www` $TEMPFILE &> /dev/null &

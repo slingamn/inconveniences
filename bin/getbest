@@ -1,0 +1,36 @@
+#!/bin/bash -e
+# hand-rolled portable alternatives system
+# e.g., "$0 www" should print the best available browser to stdout
+
+WWW[0]="google-chrome"
+WWW[1]="chromium-browser"
+WWW[2]="firefox"
+
+PDF[0]="evince"
+PDF[1]="epdfview"
+PDF[2]="xpdf"
+
+function command_exists {
+	# http://stackoverflow.com/questions/592620/check-if-a-program-exists-from-a-bash-script
+	type $1 &> /dev/null
+}
+
+function get_best {
+	ALTERNATIVES=$1
+	for i in `seq 0 ${#ALTERNATIVES}`; do
+		if command_exists ${ALTERNATIVES[$i]}; then
+			which ${ALTERNATIVES[$i]}
+			exit 0
+		fi
+	done
+	exit 1
+}
+
+# TODO fix this up too
+if [ "$1" = "www" ]; then
+	get_best $WWW
+elif [ "$1" = "pdf" ]; then
+	get_best $PDF
+else
+	exit 1
+fi
