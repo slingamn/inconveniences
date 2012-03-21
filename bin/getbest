@@ -1,9 +1,9 @@
-#!/bin/bash -e
+#!/bin/bash
 # hand-rolled portable alternatives system
 # e.g., "$0 www" should print the best available browser to stdout
 
-WWW[0]="google-chrome"
-WWW[1]="chromium-browser"
+WWW[0]="chromium-browser"
+WWW[1]="google-chrome"
 WWW[2]="firefox"
 
 PDF[0]="evince"
@@ -17,7 +17,7 @@ function command_exists {
 
 function get_best {
 	ALTERNATIVES=$1
-	for i in `seq 0 ${#ALTERNATIVES}`; do
+	for i in `seq 0 ${#ALTERNATIVES[*]}`; do
 		if command_exists ${ALTERNATIVES[$i]}; then
 			which ${ALTERNATIVES[$i]}
 			exit 0
