@@ -68,8 +68,6 @@ bind s
 
 # ... and make them better.
 bind 'K' kill
-bind 'I' login on
-bind 'O' login off
 bind '}' history
 
 # Resize the current region. The space will be removed from or added to
