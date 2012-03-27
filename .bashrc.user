@@ -4,6 +4,7 @@
 #fi
 
 # prompt with full directory name
+# TODO don't override the fancy Yelp one
 PS1="[\u@\h \w]\$ "
 
 alias gfa='git fetch --all --prune'
@@ -28,3 +29,7 @@ function run {
 }
 
 PATH=$PATH:~/bin
+
+if [ -f ~/.bashrc.yelp ]; then
+	source ~/.bashrc.yelp
+fi
