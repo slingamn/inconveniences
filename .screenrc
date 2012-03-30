@@ -18,7 +18,7 @@ autodetach on
 startup_message off
 
 # Change default scrollback value for new windows
-defscrollback 50000
+defscrollback 16384
 
 # Affects the copying of text regions
 crlf off
