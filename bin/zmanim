@@ -26,6 +26,7 @@ DEFAULT_ZIP = '94703'
 
 LIGHTING = "Candle Lighting"
 SHABBAT_ENDS = "Shabbat Ends"
+SHABBAT_HOLIDAY_ENDS = "Shabbat / Holiday Ends"
 
 HTMLPARSER = HTMLParser.HTMLParser()
 
@@ -69,7 +70,10 @@ def print_shabbat_times(zipcode):
     print friday_zmanim['title']
     print "%-*s %s" % (padding, LIGHTING, dict(friday_zmanim['zmanim'])[LIGHTING])
     print saturday_zmanim['title']
-    print "%-*s %s" % (padding, SHABBAT_ENDS, dict(saturday_zmanim['zmanim'])[SHABBAT_ENDS])
+    # look for either "Shabbat Ends" or "Shabbat / Holiday Ends"
+    saturday_dict = dict(saturday_zmanim['zmanim'])
+    print "%-*s %s" % (padding, SHABBAT_ENDS,
+        saturday_dict.get(SHABBAT_ENDS, saturday_dict[SHABBAT_HOLIDAY_ENDS]))
 
 def main():
     parser = optparse.OptionParser(usage="usage: %prog ZIPCODE")
