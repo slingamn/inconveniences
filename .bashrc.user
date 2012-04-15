@@ -15,13 +15,16 @@ alias gsd='git stash drop'
 # and soar lazily into the recycle bin:
 alias stashdrop='git stash && git stash drop'
 
-alias mtop='top -c -u $USER'
-
 # "git branch diff"
 function gitbd {
 	REMOTE=`git remote | head -n 1`
 	git diff $REMOTE/master...HEAD "$@"
 }
+
+alias mtop='top -c -u $USER'
+
+# outfox people (like the ArXiv) who try to block wget
+alias lieget='wget -U "Mozilla/5.0 (Windows NT 6.1; rv:12.0) Gecko/20120403211507 Firefox/12.0"'
 
 # hackish analogue to Alt-F2 "run" in gnome shell
 function run {
