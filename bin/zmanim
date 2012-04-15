@@ -73,7 +73,7 @@ def print_shabbat_times(zipcode):
     # look for either "Shabbat Ends" or "Shabbat / Holiday Ends"
     saturday_dict = dict(saturday_zmanim['zmanim'])
     print "%-*s %s" % (padding, SHABBAT_ENDS,
-        saturday_dict.get(SHABBAT_ENDS, saturday_dict[SHABBAT_HOLIDAY_ENDS]))
+        saturday_dict.get(SHABBAT_ENDS, saturday_dict.get(SHABBAT_HOLIDAY_ENDS)))
 
 def main():
     parser = optparse.OptionParser(usage="usage: %prog ZIPCODE")
