@@ -34,5 +34,5 @@ My teaching website is [here](http://math.berkeley.edu/~slingamn/).
 
 I've written a couple of teaching handouts that may be of interest, since I intended them to fill perceived gaps in existing materials:
 
-* [Debugging Tactics](36-debugging-tactics.pdf). This was written for Stanford's CS 106A course (introductory programming in Java). It aims to teach exceptions and &quot;printline debugging&quot; to people (like me) who are confused by interactive debuggers.
+* [Debugging Tactics](36-debugging-tactics.pdf). This was written for Stanford's CS 106A course (introductory programming in Java). It aims to teach exceptions and "printline debugging" to people (like me) who are confused by interactive debuggers.
 * [Some notes on limits](limits.pdf). This was written for Berkeley's Math 1A course (single-variable calculus). It's inspired by formal logic: it tries to clarify the definition of limit by explicitly comparing it with its negation, then relates it to the formulation of the definition as an adversary game.
