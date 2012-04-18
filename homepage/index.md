@@ -27,6 +27,8 @@ I've written a term paper for a spring 2012 philosophy seminar, discussing a rec
 
 Here's the one public piece of code I've worked on that I'm not excessively embarrassed by: a fast templating language for Python called [EZIO](http://github.com/Yelp/ezio/).
 
+More generally, I'm trying to version the current state of my philosophical positions using [git](http://git-scm.com/). I'm just getting started with this, but the repository is [here](https://github.com/slingamn/philosophy) and up-to-date compiled versions should be [here](philosophy/). My GitHub account also has a few [personal projects](https://github.com/slingamn).
+
 Teaching
 --------
 
