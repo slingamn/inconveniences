@@ -3,8 +3,9 @@
 #	source ~/.bashrc.user
 #fi
 
+# save a copy of the old prompt, potentially restore it in .bashrc.site
+OLD_PS1=$PS1
 # prompt with full directory name
-# TODO don't override the fancy Yelp one
 PS1="[\u@\h \w]\$ "
 
 alias gfa='git fetch --all --prune'
@@ -33,6 +34,7 @@ function run {
 
 PATH=$PATH:~/bin
 
-if [ -f ~/.bashrc.yelp ]; then
-	source ~/.bashrc.yelp
+# pull in site-specific settings
+if [ -f ~/.bashrc.site ]; then
+	source ~/.bashrc.site
 fi
