@@ -1,5 +1,6 @@
 #!/bin/sh -e
 
+git pull --ff-only --prune
 cat head.html > index.html
 Markdown.pl index.md >> index.html
 cat tail.html >> index.html
