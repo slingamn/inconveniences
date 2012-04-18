@@ -1,0 +1,5 @@
+#!/bin/sh -e
+
+cat head.html > index.html
+Markdown.pl index.md >> index.html
+cat tail.html >> index.html
