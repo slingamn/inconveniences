@@ -23,9 +23,9 @@ I also have a [Gravatar](http://gravatar.com/slingamn).
 Work
 ----
 
-I hope to have some papers here later.
+I've recently written a term paper for a philosophy seminar, discussing a recent exchange between Adam Elga and Julian Jonker. It's called [Against the possibility of a formal account of rationality](philosophy/against_rationality/against_rationality.pdf).
 
-In the meantime, here's the one thing I've worked on that I'm not excessively embarrassed by: a fast templating language for Python called [EZIO](http://github.com/Yelp/ezio/).
+Here's the one public piece of code I've worked on that I'm not excessively embarrassed by: a fast templating language for Python called [EZIO](http://github.com/Yelp/ezio/).
 
 Teaching
 --------
