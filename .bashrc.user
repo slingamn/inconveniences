@@ -41,6 +41,8 @@ function cdpackage {
 	if [ -n "$DIRNAME" ]; then
 		echo $FILE
 		pushd $DIRNAME
+	else
+		echo "Couldn't find package."
 	fi
 }
 
