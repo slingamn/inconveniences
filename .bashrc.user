@@ -33,6 +33,13 @@ function run {
 	"$@" &> /dev/null &
 }
 
+# find out where a Python package is; tell you where; go there
+function cdpackage {
+	set `python -c "import os.path; import $1; print $1.__file__, os.path.dirname($1.__file__);"`
+	echo $1
+	pushd $2
+}
+
 PATH=$PATH:~/bin
 
 # pull in site-specific settings
