@@ -1,0 +1,17 @@
+#!/bin/sh
+# turn off the computer...
+# but turn off the RIGHT computer.
+
+if [ "$DISPLAY" = ":0" ]; then
+	exec sudo shutdown -P now ;
+else
+	read -r -p "This isn't the machine in front of you. Shut it down anyway? [Y/n] " response
+	case $response in
+		[yY][eE][sS]|[yY])
+			exec sudo shutdown -P now
+			;;
+		*)
+			exit 0
+			;;
+	esac
+fi
