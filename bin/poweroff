@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # turn off the computer...
 # but turn off the RIGHT computer.
 # http://stackoverflow.com/questions/3231804/in-bash-how-to-add-are-you-sure-y-n-to-any-command-or-alias
