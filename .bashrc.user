@@ -35,9 +35,13 @@ function run {
 
 # find out where a Python package is; tell you where; go there
 function cdpackage {
-	set `python -c "import os.path; import $1; print $1.__file__, os.path.dirname($1.__file__);"`
-	echo $1
-	pushd $2
+	FILE_AND_DIRNAME=`python -c "import os.path; import $1; print $1.__file__, os.path.dirname($1.__file__);" 2> /dev/null`
+	FILE=`echo $FILE_AND_DIRNAME | cut -d" " -f 1`
+	DIRNAME=`echo $FILE_AND_DIRNAME | cut -d" " -f 2`
+	if [ -n "$DIRNAME" ]; then
+		echo $FILE
+		pushd $DIRNAME
+	fi
 }
 
 PATH=$PATH:~/bin
