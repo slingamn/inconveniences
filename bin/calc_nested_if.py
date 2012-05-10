@@ -21,6 +21,10 @@ Give it one argument, the name of the input cell (e.g., "Z8"), and stdin like th
 While I'm at it, here's one more tip about automating the grading process in Calc:
 to drop the two lowest quiz scores, fill in 0 for all untaken quizzes, then do:
 SUM(C8:O8) - SMALL(C8:O8, 1) - SMALL(C8:O8, 2)
+
+Also, to make an absolute reference to a cell that won't change on click-and-drag,
+(for example, to compute rescaled scores based on a class median), use $Z$32
+instead of Z32.
 """
 
 import sys
