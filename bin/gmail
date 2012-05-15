@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # isolate gmail/gdocs/etc. to a site-specific browser and profile
 # i.e., just type `gmail` and gmail comes up
 
