@@ -1,4 +1,4 @@
-#!/bin/sh -e
+#!/bin/bash -e
 # sync the time with a NIST server; make lots of noise;
 # sync the hardware clock; launch xclock so I can sync my wristwatch
 
