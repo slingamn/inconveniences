@@ -25,8 +25,12 @@ ZMANIM_URL = "http://www.chabad.org/tools/rss/zmanim.xml?%s"
 DEFAULT_ZIP = '94703'
 
 LIGHTING = "Candle Lighting"
-SHABBAT_ENDS = "Shabbat Ends"
-SHABBAT_HOLIDAY_ENDS = "Shabbat / Holiday Ends"
+SHABBAT_ENDINGS = [
+        "Shabbat Ends",
+        "Shabbat / Holiday Ends",
+        "Shabbat Ends / Holiday Begins"
+]
+MAX_LEN = max(len(s) for s in [LIGHTING] + SHABBAT_ENDINGS)
 
 HTMLPARSER = HTMLParser.HTMLParser()
 
@@ -66,14 +70,12 @@ def print_shabbat_times(zipcode):
     next_saturday = next_friday + datetime.timedelta(days=1)
     friday_zmanim = get_zmanim(zipcode, next_friday)
     saturday_zmanim = get_zmanim(zipcode, next_saturday)
-    padding = max(len(LIGHTING), len(SHABBAT_ENDS))
     print friday_zmanim['title']
-    print "%-*s %s" % (padding, LIGHTING, dict(friday_zmanim['zmanim'])[LIGHTING])
+    print "%-*s %s" % (MAX_LEN, LIGHTING, dict(friday_zmanim['zmanim'])[LIGHTING])
     print saturday_zmanim['title']
-    # look for either "Shabbat Ends" or "Shabbat / Holiday Ends"
-    saturday_dict = dict(saturday_zmanim['zmanim'])
-    print "%-*s %s" % (padding, SHABBAT_ENDS,
-        saturday_dict.get(SHABBAT_ENDS, saturday_dict.get(SHABBAT_HOLIDAY_ENDS)))
+    for zman, time in saturday_zmanim['zmanim']:
+        if zman in SHABBAT_ENDINGS:
+            print "%-*s %s" % (MAX_LEN, zman, time)
 
 def main():
     parser = optparse.OptionParser(usage="usage: %prog ZIPCODE")
