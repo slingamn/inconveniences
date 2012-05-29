@@ -1,6 +1,6 @@
-#!/bin/bash -e
+#!/bin/sh -e
 # simple Markdown previewer
 
 TEMPFILE=`mktemp`
 Markdown.pl "$@" > $TEMPFILE
-`getbest www` $TEMPFILE &> /dev/null &
+`getbest www` $TEMPFILE > /dev/null 2>&1 &
