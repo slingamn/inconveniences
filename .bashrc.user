@@ -31,7 +31,7 @@ alias lieget='wget -U "Mozilla/5.0 (Windows NT 6.1; rv:12.0) Gecko/2012040321150
 
 # hackish analogue to Alt-F2 "run" in gnome shell
 function run {
-	"$@" &> /dev/null &
+	"$@" < /dev/null &> /dev/null &
 }
 
 # find out where a Python package is; tell you where; go there
