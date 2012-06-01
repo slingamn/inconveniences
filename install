@@ -1,0 +1,10 @@
+#!/bin/sh -e
+
+# this is not aware of deleted files
+rsync -av home/ ~
+
+if [ "$1" = "--root" ];
+then
+	chmod 0440 ./king
+	sudo cp -v ./king /etc/sudoers.d/king
+fi
