@@ -17,6 +17,8 @@ alias gsd='git stash drop'
 # like in Windows 95 when you could watch the little piece of paper get crumpled
 # and soar lazily into the recycle bin:
 alias stashdrop='git stash && git stash drop'
+# time to stop fighting this urge:
+alias gcam='git commit -am'
 
 # "git branch diff"
 function gitbd {
