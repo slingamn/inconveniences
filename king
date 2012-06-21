@@ -1,7 +1,6 @@
 ## i am the king
 ## (this file goes in /etc/sudoers.d/king)
 shivaram ALL=(ALL) NOPASSWD:/sbin/shutdown
-shivaram ALL=(ALL) NOPASSWD:/sbin/modprobe
 shivaram ALL=(ALL) NOPASSWD:/usr/sbin/hwclock
 shivaram ALL=(ALL) NOPASSWD:/usr/sbin/ntpdate
 shivaram ALL=(ALL) NOPASSWD:/usr/sbin/openvpn
