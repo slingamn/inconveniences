@@ -1,0 +1,4 @@
+#!/bin/sh
+# "launch a damn browser"
+
+`getbest www` "$@" < /dev/null > /dev/null 2>&1 &

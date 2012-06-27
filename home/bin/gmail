@@ -2,4 +2,4 @@
 # isolate gmail/gdocs/etc. to a site-specific browser and profile
 # i.e., just type `gmail` and gmail comes up
 
-firefox -no-remote -P gmail > /dev/null 2>&1 &
+firefox -no-remote -P gmail < /dev/null > /dev/null 2>&1 &
