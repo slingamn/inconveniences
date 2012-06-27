@@ -3,6 +3,10 @@
 # this is not aware of deleted files
 rsync -rv home/ ~
 
+# symlinks for missing .bashrc and .bash_profile
+if [ ! -e ~/.bashrc ]; then ln -s ~/.bashrc.user ~/.bashrc; fi
+if [ ! -e ~/.bash_profile ]; then ln -s ~/.bashrc ~/.bash_profile; fi
+
 if [ "$1" = "--root" ];
 then
 	chmod 0440 ./king
