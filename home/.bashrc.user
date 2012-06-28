@@ -23,7 +23,11 @@ alias gcam='git commit -am'
 # "git branch diff"
 function gitbd {
 	REMOTE=`git remote | head -n 1`
-	git diff $REMOTE/master...HEAD "$@"
+	if [ -n "$REMOTE" ]; then
+		git diff $REMOTE/master...HEAD "$@"
+	else
+		echo "No remote found."
+	fi
 }
 
 alias mtop='top -c -u $USER'
