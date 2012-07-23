@@ -1,0 +1,54 @@
+#!/usr/bin/python
+
+"""
+Small piece of porcelain for python-feedparser.
+
+Watches a feed in a terminal, refreshes it every minute or so, respects etags.
+
+Usage: $0 FEED_URL
+"""
+
+import os
+import random
+import sys
+import time
+
+import feedparser
+
+def clear():
+    """Clear the screen."""
+    # meh
+    os.system('clear')
+
+DELAY = 55
+DELAY_MAX_FUDGE = 10
+
+def main(feed_url):
+    last_modified = None
+    last_etag = None
+
+    while True:
+        fpd = feedparser.parse(feed_url, etag=last_etag, modified=last_modified)
+        if fpd.status != 304:
+            # has been modified
+            clear()
+            last_modified = fpd.get('modified')
+            last_etag = fpd.get('etag')
+
+            print fpd.feed.title
+            print fpd.feed.date
+            print
+
+            for entry in fpd.entries:
+                print entry.title
+                print entry.link
+        else:
+            # unmodified since last etag/last-modified
+            sys.stdout.write('.')
+            sys.stdout.flush()
+
+        time.sleep(DELAY + random.randint(0, DELAY_MAX_FUDGE))
+
+if __name__ == '__main__':
+    feed_url = sys.argv[1]
+    sys.exit(main(feed_url))
