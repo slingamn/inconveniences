@@ -30,6 +30,8 @@ function gitbd {
 	fi
 }
 
+alias svnshow='svn diff -c'
+
 alias mtop='top -c -u $USER'
 
 # outfox people (like the ArXiv) who try to block wget
