@@ -3,3 +3,4 @@
 
 rm -rv ~/.macromedia/Flash_Player/macromedia.com/support/flashplayer/sys/*
 rm -rv ~/.macromedia/Flash_Player/#SharedObjects/*
+rm -rv ~/.config/google-chrome/*/Pepper\ Data/Shockwave\ Flash/*
