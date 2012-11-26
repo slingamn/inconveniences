@@ -29,7 +29,11 @@ def main(feed_url):
 
     while True:
         fpd = feedparser.parse(feed_url, etag=last_etag, modified=last_modified)
-        if fpd.status != 304:
+        # apparently 'status' (and the other fields) will simply not be present
+        # on connection timeout and various other error conditions, rather than
+        # throwing an exception...
+        status = fpd.get('status', None)
+        if status is not None and status != 304:
             # has been modified
             clear()
             last_modified = fpd.get('modified')
@@ -43,8 +47,9 @@ def main(feed_url):
                 print entry.title
                 print entry.link
         else:
+            symbol = '.' if status == 304 else 'x'
             # unmodified since last etag/last-modified
-            sys.stdout.write('.')
+            sys.stdout.write(symbol)
             sys.stdout.flush()
 
         time.sleep(DELAY + random.randint(0, DELAY_MAX_FUDGE))
