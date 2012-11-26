@@ -47,11 +47,10 @@ function run {
 
 # find out where a Python package is; tell you where; go there
 function cdpackage {
-	FILE_AND_DIRNAME=`python -c "import os.path; import $1; print $1.__file__, os.path.dirname($1.__file__);" 2> /dev/null`
-	FILE=`echo $FILE_AND_DIRNAME | cut -d" " -f 1`
-	DIRNAME=`echo $FILE_AND_DIRNAME | cut -d" " -f 2`
+	FILE_STR=`python -c "import os.path; import $1; print $1.__file__;" 2> /dev/null`
+	DIRNAME=`dirname $FILE_STR 2> /dev/null`
 	if [ -n "$DIRNAME" ]; then
-		echo $FILE
+		echo $FILE_STR
 		pushd $DIRNAME
 	else
 		echo "Couldn't find package."
