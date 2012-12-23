@@ -20,6 +20,11 @@ alias stashdrop='git stash && git stash drop'
 # time to stop fighting this urge:
 alias gcam='git commit -am'
 
+function gitbase {
+	REMOTE=`git remote | head -n 1`
+	git merge-base HEAD $REMOTE/master
+}
+
 # "git branch diff"
 function gitbd {
 	REMOTE=`git remote | head -n 1`
