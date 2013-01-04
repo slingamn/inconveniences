@@ -35,6 +35,11 @@ function gitbd {
 	fi
 }
 
+# start bisecting my own changes in a branch
+function gbinit {
+	git bisect start HEAD `gitbase`
+}
+
 alias svnshow='svn diff -c'
 
 alias mtop='top -c -u $USER'
