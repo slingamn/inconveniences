@@ -15,13 +15,14 @@ issues with Daylight Savings Time.
 
 import sys
 import datetime
+import httplib
 import optparse
 import urllib
-import urllib2
 import HTMLParser
 from xml.dom import minidom
 
-ZMANIM_URL = "http://www.chabad.org/tools/rss/zmanim.xml?%s"
+ZMANIM_SERVER = 'www.chabad.org'
+ZMANIM_URL = "/tools/rss/zmanim.xml"
 DEFAULT_ZIP = '94703'
 
 LIGHTING = "Candle Lighting"
@@ -34,19 +35,23 @@ MAX_LEN = max(len(s) for s in [LIGHTING] + SHABBAT_ENDINGS)
 
 HTMLPARSER = HTMLParser.HTMLParser()
 
+def fetch_zmanim(zipcode, date):
+    """"Fetch the zmanim from Chabad via httplib (I think they blacklisted the urllib2 UA)."""
+    parameters = {'z': zipcode, 'tDate': date.strftime('%m/%d/%Y')}
+    conn = httplib.HTTPConnection(ZMANIM_SERVER, 80, timeout=15.0)
+    try:
+        conn.request('GET', ZMANIM_URL + '?' + urllib.urlencode(parameters))
+        return conn.getresponse().read()
+    finally:
+        conn.close()
+
 def unpack_text(element, tagname):
     """XML is insane."""
     return element.getElementsByTagName(tagname)[0].firstChild.data
 
 def get_zmanim(zipcode, date):
     """Zipcode is a string or int, date is a datetime.date."""
-    parameters = {'z': zipcode, 'tDate': date.strftime('%m/%d/%Y')}
-    zmanim_url = ZMANIM_URL % (urllib.urlencode(parameters),)
-    doc = urllib2.urlopen(zmanim_url)
-    try:
-        dom = minidom.parse(doc)
-    finally:
-        doc.close()
+    dom = minidom.parseString(fetch_zmanim(zipcode, date))
 
     result = {}
     result['title'] = unpack_text(dom.documentElement, 'title')
