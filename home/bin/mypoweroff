@@ -3,16 +3,12 @@
 # but turn off the RIGHT computer.
 # http://stackoverflow.com/questions/3231804/in-bash-how-to-add-are-you-sure-y-n-to-any-command-or-alias
 
+function echoerr() { echo "$@" 1>&2; }
+
 if [[ -z "$SSH_TTY" && "$TERM" != "screen" ]]; then
 	exec sudo shutdown -P now ;
 else
-	read -r -p "This might not be the machine in front of you. Shut it down anyway? [Y/n] " response
-	case $response in
-		[yY][eE][sS]|[yY])
-			exec sudo shutdown -P now
-			;;
-		*)
-			exit 0
-			;;
-	esac
+	echoerr "WARNING: this doesn't seem to be the machine in front of you."
+	echoerr "To shut this machine down anyway, use \`shutdown -P now\` directly."
+	exit 1
 fi
