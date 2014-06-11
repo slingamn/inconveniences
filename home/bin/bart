@@ -13,9 +13,8 @@ import optparse
 from xml.dom import minidom
 import urllib2
 
-BART_DATA_URL = "http://www.bart.gov/dev/eta/bart_eta.xml"
-
-abbr_to_name = \
+#XXX we're not actually using this
+_abbr_to_name = \
 {u'12TH': u'12th St. Oakland City Center',
  u'16TH': u'16th St. Mission',
  u'19TH': u'19th St. Oakland',
@@ -60,59 +59,54 @@ abbr_to_name = \
  u'WCRK': u'Walnut Creek',
  u'WOAK': u'West Oakland'}
 
+SHARED_BART_API_KEY = 'MW9S-E7SL-26DU-VV8V'
+
+def get_etd_url(station):
+    return "http://api.bart.gov/api/etd.aspx?cmd=etd&orig=%s&key=%s" \
+           % (station, SHARED_BART_API_KEY)
+
 def unpack_text(element, tagname):
     """XML is insane."""
     return element.getElementsByTagName(tagname)[0].firstChild.data
 
-def get_station_to_status():
-    """Turn the XML feed into a JSON dict."""
+def convert_eta(eta_str):
+    return int(eta_str) if eta_str != 'Leaving' else 0
 
-    doc = urllib2.urlopen(BART_DATA_URL)
+def lookup_status(station):
+    doc = urllib2.urlopen(get_etd_url(station))
     try:
         dom = minidom.parse(doc)
     finally:
         doc.close()
 
-    station_to_status = {}
-    for elem in dom.documentElement.getElementsByTagName('station'):
-        try:
-            station_abbr, _station_name, station_time = \
-                [unpack_text(elem, name) for name in ('abbr', 'name', 'time')]
-        except AttributeError:
-            #XXX sometimes the API returns a borked station, ignore
-            continue
+    errors = dom.documentElement.getElementsByTagName('error')
+    if errors:
+        raise Exception(unpack_text(errors[0], 'text'), unpack_text(errors[0], 'details'))
 
-        station_rec = {'station_abbr': station_abbr, 'time': station_time, 'eta': {}}
-        for status in elem.getElementsByTagName('eta'):
-            dest = unpack_text(status, 'destination')
-            estimate = unpack_text(status, 'estimate')
-            estimate_pieces = [piece.split(" ")[0] for piece in estimate.split(", ")]
-            estimate_times = [int(piece) if piece != "Leaving" else 0 for piece in estimate_pieces]
-            station_rec['eta'][dest] = estimate_times
-            station_to_status[station_abbr] = station_rec
-
-    return station_to_status
+    timestamp = unpack_text(dom.documentElement, 'time')
+    station_name = unpack_text(dom.documentElement.getElementsByTagName('station')[0], 'name')
+    dest_to_status = {}
+    for etd_tag in dom.documentElement.getElementsByTagName('etd'):
+        dest = unpack_text(etd_tag, 'destination')
+        etas = [
+            convert_eta(unpack_text(estimate, 'minutes'))
+            for estimate
+            in etd_tag.getElementsByTagName('estimate')
+        ]
+        dest_to_status[dest] = etas
+    return timestamp, station_name, dest_to_status
 
 def main():
     parser = optparse.OptionParser(usage="usage: %prog STATION")
     (_options, args) = parser.parse_args()
 
     station = args[0].upper() if len(args) > 0 else 'POWL'
-    humanreadable_station = abbr_to_name.get(station)
-    if not humanreadable_station:
-        print >>sys.stderr, "Unrecognized abbreviation %s." % (station,)
-        return 1
-
-    station_to_status = get_station_to_status()
-    status = station_to_status.get(station)
-    if status is None:
-        print "No departure times for %s available." % (humanreadable_station,)
-        return 0
+    timestamp, station_name, dest_to_status = lookup_status(station)
 
     # padding was eklitzke's idea. thanks!
-    max_dest_len = max(len(dest) for dest in status['eta'].iterkeys())
-    print "Departure times for %s (as of %s)" % (humanreadable_station, status['time'])
-    for dest, times in status['eta'].iteritems():
+    max_dest_len = max(len(dest) for dest in dest_to_status.iterkeys())
+    print "Departure times for %s (as of %s)" % (station_name,timestamp)
+    for dest, times in dest_to_status.iteritems():
         print "%-*s  %s" % (max_dest_len, dest, " mins, ".join(str(time) for time in times) + " mins")
     return 0
 
