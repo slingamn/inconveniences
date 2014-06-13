@@ -103,9 +103,12 @@ def main():
     station = args[0].upper() if len(args) > 0 else 'POWL'
     timestamp, station_name, dest_to_status = lookup_status(station)
 
+    if not dest_to_status:
+        print "No departure times for %s (as of %s)" % (station_name,timestamp)
+	return 0
+    print "Departure times for %s (as of %s)" % (station_name,timestamp)
     # padding was eklitzke's idea. thanks!
     max_dest_len = max(len(dest) for dest in dest_to_status.iterkeys())
-    print "Departure times for %s (as of %s)" % (station_name,timestamp)
     for dest, times in dest_to_status.iteritems():
         print "%-*s  %s" % (max_dest_len, dest, " mins, ".join(str(time) for time in times) + " mins")
     return 0
