@@ -68,7 +68,7 @@ function cdpackage {
 
 PATH=$PATH:~/bin
 
-HISTCONTROL=ignorespace
+HISTCONTROL=ignoreboth
 
 # pull in site-specific settings
 if [ -f ~/.bashrc.site ]; then
