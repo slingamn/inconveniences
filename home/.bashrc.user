@@ -69,6 +69,7 @@ function cdpackage {
 PATH=$PATH:~/bin
 
 HISTCONTROL=ignoreboth
+LESSOPEN=
 
 # pull in site-specific settings
 if [ -f ~/.bashrc.site ]; then
