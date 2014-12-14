@@ -70,6 +70,7 @@ PATH=$PATH:~/bin
 
 HISTCONTROL=ignoreboth
 LESSOPEN=
+LESSCLOSE=
 
 # pull in site-specific settings
 if [ -f ~/.bashrc.site ]; then
