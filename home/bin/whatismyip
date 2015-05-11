@@ -1,5 +1,0 @@
-#!/bin/sh
-# stupid client for whatismyip.com
-
-curl -s http://automation.whatismyip.com/n09230945.asp
-echo
