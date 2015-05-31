@@ -5,6 +5,7 @@ shivaram ALL=(ALL) NOPASSWD:/usr/sbin/hwclock
 shivaram ALL=(ALL) NOPASSWD:/usr/sbin/ntpdate
 shivaram ALL=(ALL) NOPASSWD:/usr/sbin/openvpn
 shivaram ALL=(ALL) NOPASSWD:/usr/bin/yum
+shivaram ALL=(ALL) NOPASSWD:/usr/bin/dnf
 shivaram ALL=(ALL) NOPASSWD:/usr/bin/journalctl
 
 ## (for the Ubuntu machines)

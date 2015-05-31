@@ -6,6 +6,13 @@ function command_exists {
 	type $1 &> /dev/null
 }
 
+if command_exists dnf ;
+then
+	sudo dnf upgrade -y
+	exit $?
+fi
+
+
 if command_exists yum ;
 then
 	sudo yum update -y --changelog
