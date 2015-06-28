@@ -1,0 +1,25 @@
+#!/bin/bash
+
+pulseaudio --start
+
+xset dpms 0 0 600
+nvidia-settings -l
+eval $(cat ~/.fehbg)
+setxkbmap `cat ~/.Xkbmap`
+[[ -f ~/.Xresources ]] && xrdb -merge ~/.Xresources
+
+nm-applet &
+taffybar &
+#volumeicon &
+autocutsel &
+autocutsel -selection PRIMARY &
+
+#eval $(ssh-agent)
+
+eval $(gnome-keyring-daemon -s)
+export GNOME_KEYRING_CONTROL
+export SSH_AUTH_SOCK
+export GPG_AGENT_INFO
+export GNOME_KEYRING_PID
+
+exec /bin/xmonad
