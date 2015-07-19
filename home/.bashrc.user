@@ -19,6 +19,7 @@ alias gsd='git stash drop'
 alias stashdrop='git stash && git stash drop'
 # time to stop fighting this urge:
 alias gcam='git commit -am'
+alias sl='ls'
 
 function gitbase {
 	REMOTE=`git remote | head -n 1`

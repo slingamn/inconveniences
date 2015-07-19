@@ -110,3 +110,6 @@ map <Down> gj
 " non-terrible tab completion
 set wildmode=longest,list,full
 set wildmenu
+
+" wtf fedora?
+colorscheme default
