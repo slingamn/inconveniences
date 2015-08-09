@@ -14,12 +14,6 @@ taffybar &
 autocutsel &
 autocutsel -selection PRIMARY &
 
-#eval $(ssh-agent)
-
-eval $(gnome-keyring-daemon -s)
-export GNOME_KEYRING_CONTROL
-export SSH_AUTH_SOCK
-export GPG_AGENT_INFO
-export GNOME_KEYRING_PID
+eval $(ssh-agent)
 
 exec /bin/xmonad
