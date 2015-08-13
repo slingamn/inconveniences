@@ -1,0 +1,13 @@
+#!/usr/bin/python
+"""
+128 bits of entropy in 22 ASCII characters.
+
+Doesn't match the UUID4 standard because meh.
+"""
+
+from __future__ import print_function
+
+import base64
+import os
+
+print(base64.urlsafe_b64encode(os.urandom(16)).rstrip('='))
