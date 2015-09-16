@@ -55,6 +55,12 @@ function run {
 	"$@" < /dev/null &> /dev/null &
 }
 
+# UNIX time to date
+function seedate {
+	# http://stackoverflow.com/a/14107355
+	date -d "1970-01-01 $1 sec UTC"
+}
+
 # find out where a Python package is; tell you where; go there
 function cdpackage {
 	FILE_STR=`python -c "from __future__ import print_function; import os.path; import $1; print($1.__file__);" 2> /dev/null`
