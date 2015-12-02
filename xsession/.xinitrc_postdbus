@@ -4,7 +4,7 @@ pulseaudio --start
 
 xset dpms 0 0 600
 nvidia-settings -l
-eval $(cat ~/.fehbg)
+sh ~/.fehbg
 setxkbmap `cat ~/.Xkbmap`
 [[ -f ~/.Xresources ]] && xrdb -merge ~/.Xresources
 
