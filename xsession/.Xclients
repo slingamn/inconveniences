@@ -5,15 +5,11 @@ pulseaudio --start
 xset dpms 0 0 600
 nvidia-settings -l
 sh ~/.fehbg
-setxkbmap `cat ~/.Xkbmap`
-[[ -f ~/.Xresources ]] && xrdb -merge ~/.Xresources
 
 nm-applet &
 taffybar &
-#volumeicon &
+
 autocutsel &
 autocutsel -selection PRIMARY &
 
-eval $(ssh-agent)
-
-exec /bin/xmonad
+/bin/xmonad
