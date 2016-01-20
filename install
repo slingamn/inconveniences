@@ -9,6 +9,6 @@ if [ ! -e ~/.bash_profile ]; then ln -s ~/.bashrc ~/.bash_profile; fi
 
 if [ "$1" = "--root" ];
 then
-	chmod 0440 ./king
-	sudo cp -v ./king /etc/sudoers.d/king
+	chmod 0440 ./system/king
+	sudo cp -v ./system/king /etc/sudoers.d/king
 fi
