@@ -14,9 +14,9 @@ import System.Taffybar.Hooks.PagerHints (pagerHints)
 -- "just treat Haskell as a domain-specific language for window management"
 
 lowerVolume    = "<XF86AudioLowerVolume>"
-lowerVolumeCMD = "amixer -c 0 set Master 1-"
+lowerVolumeCMD = "amixer set Master 1%-"
 raiseVolume    = "<XF86AudioRaiseVolume>"
-raiseVolumeCMD = "amixer -c 0 set Master 1+ unmute"
+raiseVolumeCMD = "amixer set Master 1%+ unmute"
 muteVolume     = "<XF86AudioMute>"
 muteVolumeCMD  = "amixer set Master toggle"
 
