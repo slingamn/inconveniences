@@ -81,6 +81,11 @@ HISTCONTROL=ignoreboth
 LESSOPEN=
 LESSCLOSE=
 
+CANDIDATE_SOCK=/tmp/${USER}_personal_sock
+if [[ -z "$SSH_AUTH_SOCK" && -O "$CANDIDATE_SOCK" ]]; then
+	export SSH_AUTH_SOCK=$CANDIDATE_SOCK
+fi
+
 # pull in site-specific settings
 if [ -f ~/.bashrc.site ]; then
 	source ~/.bashrc.site
