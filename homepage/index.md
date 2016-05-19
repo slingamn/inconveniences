@@ -22,6 +22,8 @@ I also have a [Gravatar](http://gravatar.com/slingamn).
 
 Work
 ----
+As of May 2016, here's my take on the [philosophical status of the continuum hypothesis](philosophy/continuum_hypothesis/continuum_hypothesis.pdf).
+
 As of summer 2013, I have a draft of a new philosophy paper, called [Frequentism as a positivism: a three-tiered account of probability](philosophy/frequentism_positivism/frequentism_positivism.pdf). It replies to Alan Hajek's criticisms of frequentism, proposes a different conception of what frequency probability is, and tries for an integrated picture of different notions of probability.
 
 I wrote a paper for a spring 2012 philosophy seminar, discussing a recent exchange between Adam Elga and Julian Jonker. It's called [Against the possibility of a formal account of rationality](philosophy/against_rationality/against_rationality.pdf). A brief summary: it's about potential implications of P vs. NP and the exponential time hypothesis for the meaning of "rationality".
