@@ -3,6 +3,7 @@
 pulseaudio --start
 
 xset dpms 0 0 600
+xset b off
 nvidia-settings -l
 sh ~/.fehbg
 
