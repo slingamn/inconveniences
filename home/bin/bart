@@ -8,10 +8,16 @@ bart 24th # departure times for 24th and Mission
 bart nbrk # departure times for North Berkeley
 """
 
+from __future__ import print_function
+
 import sys
 import optparse
 from xml.dom import minidom
-import urllib2
+
+try:
+    import urllib2 as urllib_request
+except ImportError:
+    from urllib import request as urllib_request
 
 #XXX we're not actually using this
 _abbr_to_name = \
@@ -62,7 +68,7 @@ _abbr_to_name = \
 SHARED_BART_API_KEY = 'MW9S-E7SL-26DU-VV8V'
 
 def get_etd_url(station):
-    return "http://api.bart.gov/api/etd.aspx?cmd=etd&orig=%s&key=%s" \
+    return "https://api.bart.gov/api/etd.aspx?cmd=etd&orig=%s&key=%s" \
            % (station, SHARED_BART_API_KEY)
 
 def unpack_text(element, tagname):
@@ -73,7 +79,7 @@ def convert_eta(eta_str):
     return int(eta_str) if eta_str != 'Leaving' else 0
 
 def lookup_status(station):
-    doc = urllib2.urlopen(get_etd_url(station))
+    doc = urllib_request.urlopen(get_etd_url(station), timeout=10)
     try:
         dom = minidom.parse(doc)
     finally:
@@ -104,13 +110,13 @@ def main():
     timestamp, station_name, dest_to_status = lookup_status(station)
 
     if not dest_to_status:
-        print "No departure times for %s (as of %s)" % (station_name,timestamp)
-	return 0
-    print "Departure times for %s (as of %s)" % (station_name,timestamp)
+        print("No departure times for %s (as of %s)" % (station_name,timestamp))
+        return 0
+    print("Departure times for %s (as of %s)" % (station_name,timestamp))
     # padding was eklitzke's idea. thanks!
-    max_dest_len = max(len(dest) for dest in dest_to_status.iterkeys())
-    for dest, times in dest_to_status.iteritems():
-        print "%-*s  %s" % (max_dest_len, dest, " mins, ".join(str(time) for time in times) + " mins")
+    max_dest_len = max(len(dest) for dest in dest_to_status)
+    for dest, times in dest_to_status.items():
+        print("%-*s  %s" % (max_dest_len, dest, " mins, ".join(str(time) for time in times) + " mins"))
     return 0
 
 if __name__ == '__main__':
