@@ -37,7 +37,7 @@ fu Select_c_style()
         set expandtab
     en
 endf
-au BufRead,BufNewFile *.c,*.h call Select_c_style()
+au BufRead,BufNewFile *.c,*.cc,*.cpp,*.h call Select_c_style()
 au BufRead,BufNewFile Makefile* set noexpandtab
 
 au BufRead,BufNewFile *.md set syntax=off
@@ -48,7 +48,7 @@ highlight BadWhitespace ctermbg=red guibg=red
 " Display tabs at the beginning of a line in Python mode as bad.
 au BufRead,BufNewFile *.py,*.pyw match BadWhitespace /^\t\+/
 " Make trailing whitespace be flagged as bad.
-au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
+au BufRead,BufNewFile *.py,*.pyw,*.c,*.cc,*.cpp,*.h match BadWhitespace /\s\+$/
 
 " Wrap text after a certain number of characters
 " Python: 79 
@@ -69,7 +69,7 @@ au BufRead,BufNewFile *.c,*.h set formatoptions-=c formatoptions-=o formatoption
 " line endings.
 " Python: yes
 " C: yes
-au BufNewFile *.py,*.pyw,*.c,*.h set fileformat=unix
+au BufNewFile *.py,*.pyw,*.c,*.cc,*.cpp,*.h set fileformat=unix
 
 
 " ----------------------------------------------------------------------------
