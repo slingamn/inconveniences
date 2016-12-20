@@ -91,6 +91,9 @@ if [[ -z "$SSH_AUTH_SOCK" && -O "$CANDIDATE_SOCK" ]]; then
 	export SSH_AUTH_SOCK=$CANDIDATE_SOCK
 fi
 
+# this can be overridden in .bashrc.site
+alias atm='tmux'
+
 # pull in site-specific settings
 if [ -f ~/.bashrc.site ]; then
 	source ~/.bashrc.site
