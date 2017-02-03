@@ -47,6 +47,8 @@ alias svnshow='svn diff -c'
 
 alias mtop='top -c -u $USER'
 
+alias qshred='shred -u -n 1 --random-source /dev/zero'
+
 # outfox people (like the ArXiv) who try to block wget
 BOGUS_UA="Mozilla/5.0 (Windows NT 10.0; WOW64; rv:48.0) Gecko/20100101 Firefox/48.0"
 alias lieget='wget -U "${BOGUS_UA}"'
