@@ -18,13 +18,13 @@ cpuCallback = do
   return [totalLoad, systemLoad]
 
 main = do
-  let memCfg = defaultGraphConfig { graphDataColors = [(1, 0, 0, 1)]
-				  , graphDirection = RIGHT_TO_LEFT
+  let memCfg = defaultGraphConfig { graphDataColors = [(1, 0, 0, 1)],
+                                    graphDirection = RIGHT_TO_LEFT
                                   }
       cpuCfg = defaultGraphConfig { graphDataColors = [ (0, 1, 0, 1)
                                                       , (1, 0, 1, 0.5)
-                                                      ]
-				  , graphDirection = RIGHT_TO_LEFT
+                                                      ],
+                                    graphDirection = RIGHT_TO_LEFT
                                   }
   let clock = textClockNew Nothing "<span fgcolor='orange'>%a %b %_d %l:%M %p</span>" 1
       pager = taffyPagerNew defaultPagerConfig
