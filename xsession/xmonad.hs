@@ -24,6 +24,8 @@ myKeys = [ ("<Print>"    , spawn "gnome-screenshot -i" ) -- screenshot
          , (raiseVolume  , spawn raiseVolumeCMD ) -- raise volume
          , (lowerVolume  , spawn lowerVolumeCMD ) -- lower volume
          , (muteVolume   , spawn muteVolumeCMD ) -- mute volume
+         , ("<XF86MonBrightnessUp>",   spawn "xbacklight -inc 10" )
+         , ("<XF86MonBrightnessDown>", spawn "xbacklight -dec 10" )
          ]
 
 myLayout = avoidStruts (
