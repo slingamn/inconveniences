@@ -1,11 +1,8 @@
 #!/bin/bash
 
-pulseaudio --start
-
-xset dpms 0 0 600
-xset b off
-nvidia-settings -l
 sh ~/.fehbg
+
+pulseaudio --start
 
 nm-applet &
 taffybar &
@@ -13,4 +10,14 @@ taffybar &
 autocutsel &
 autocutsel -selection PRIMARY &
 
-exec /bin/xmonad
+nvidia-settings -l
+
+if type xscreensaver &> /dev/null; then
+	# let xscreensaver manage dpms along with everything else
+	xscreensaver -nosplash &
+else
+	xset dpms 0 0 600
+fi
+xset b off
+
+exec xmonad
