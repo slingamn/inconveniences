@@ -1,0 +1,11 @@
+[ui]
+username = Shivaram Lingamneni <slingamn@cs.stanford.edu>
+verbose = True
+
+[extensions]
+color =
+pager =
+
+[pager]
+pager = LESS=FRSXQ less
+quiet = True
