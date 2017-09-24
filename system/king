@@ -2,14 +2,9 @@
 ## (this file goes in /etc/sudoers.d/king)
 shivaram ALL=(ALL) NOPASSWD:/usr/sbin/shutdown
 shivaram ALL=(ALL) NOPASSWD:/usr/sbin/hwclock
-shivaram ALL=(ALL) NOPASSWD:/usr/sbin/ntpdate
-shivaram ALL=(ALL) NOPASSWD:/usr/sbin/openvpn
-shivaram ALL=(ALL) NOPASSWD:/usr/sbin/swapoff
-shivaram ALL=(ALL) NOPASSWD:/usr/sbin/swapon
-shivaram ALL=(ALL) NOPASSWD:/usr/bin/dnf
 shivaram ALL=(ALL) NOPASSWD:/usr/bin/journalctl
+shivaram ALL=(ALL) NOPASSWD:/etc/bin/getupdates
 
 ## (for the Ubuntu machines)
 shivaram ALL=(ALL) NOPASSWD:/sbin/hwclock
 shivaram ALL=(ALL) NOPASSWD:/sbin/shutdown
-shivaram ALL=(ALL) NOPASSWD:/usr/bin/apt-get
