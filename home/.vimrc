@@ -113,3 +113,6 @@ set wildmenu
 
 " wtf fedora?
 colorscheme default
+
+au BufRead,BufNewFile *.go set tabstop=4
+au BufRead,BufNewFile *.go set shiftwidth=4
