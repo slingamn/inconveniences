@@ -96,6 +96,9 @@ fi
 # this can be overridden in .bashrc.site
 alias atm='tmux'
 
+export GOPATH=~/go
+export PATH=$PATH:/usr/local/go/bin:${GOPATH}/bin
+
 # pull in site-specific settings
 if [ -f ~/.bashrc.site ]; then
 	source ~/.bashrc.site
