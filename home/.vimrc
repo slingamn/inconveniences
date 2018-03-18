@@ -116,3 +116,12 @@ colorscheme default
 
 au BufRead,BufNewFile *.go set tabstop=4
 au BufRead,BufNewFile *.go set shiftwidth=4
+au BufRead,BufNewFile *.go set noexpandtab
+
+au BufRead,BufNewFile *.yaml set expandtab
+
+" https://stackoverflow.com/a/20418591
+set autoread
+au FocusGained,BufEnter * :silent! !
+" https://stackoverflow.com/a/45428958
+au CursorHold,CursorHoldI * :silent! !
