@@ -84,6 +84,7 @@ function waithost {
 
 PATH=$PATH:~/bin
 
+shopt -s histappend
 HISTCONTROL=ignoreboth
 LESSOPEN=
 LESSCLOSE=
