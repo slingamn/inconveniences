@@ -1,0 +1,28 @@
+#!/bin/bash
+
+# hax: hardcode monitor orientation for now
+#xrandr --output HDMI-3 --primary --left-of HDMI-2
+xrandr --output HDMI3 --primary --left-of HDMI2
+
+sh ~/.fehbg
+
+pulseaudio --start
+
+autocutsel &
+autocutsel -selection PRIMARY &
+
+if type xscreensaver &> /dev/null; then
+	# let xscreensaver manage dpms along with everything else
+	xscreensaver -nosplash &
+else
+	xset dpms 0 0 600
+fi
+xset b off
+
+[ -f ~/.Xresources ] && xrdb -merge ~/.Xresources
+[ -f ~/.Xkbmap ] && setxkbmap $(cat ~/.Xkbmap)
+
+
+taffybar &
+
+exec xmonad
