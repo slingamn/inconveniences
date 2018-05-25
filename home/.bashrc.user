@@ -89,7 +89,8 @@ HISTCONTROL=ignoreboth
 LESSOPEN=
 LESSCLOSE=
 
-EDITOR=/usr/bin/vim
+export VISUAL=/usr/bin/vim
+export EDITOR=$VISUAL
 
 CANDIDATE_SOCK=/tmp/${USER}_personal_sock
 if [[ -z "$SSH_AUTH_SOCK" && -O "$CANDIDATE_SOCK" ]]; then
