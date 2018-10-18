@@ -10,4 +10,4 @@ from __future__ import print_function
 import base64
 import os
 
-print(base64.urlsafe_b64encode(os.urandom(16)).rstrip('='))
+print(base64.urlsafe_b64encode(os.urandom(16)).decode('ascii').rstrip('='))
