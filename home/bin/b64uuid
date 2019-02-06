@@ -9,5 +9,7 @@ from __future__ import print_function
 
 import base64
 import os
+import sys
 
-print(base64.urlsafe_b64encode(os.urandom(16)).decode('ascii').rstrip('='))
+end = '' if '-n' in sys.argv else '\n'
+print(base64.urlsafe_b64encode(os.urandom(16)).decode('ascii').rstrip('='), end=end)
