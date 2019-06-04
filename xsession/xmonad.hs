@@ -7,7 +7,6 @@ import XMonad.Layout.Fullscreen
 import XMonad.Layout.NoBorders
 
 import XMonad.Hooks.EwmhDesktops (ewmh)
-import System.Taffybar.Hooks.PagerHints (pagerHints)
 
 -- all this stuff is cargo-culted to the max
 -- I'm taking a friend's advice:
@@ -31,7 +30,7 @@ myKeys = [ ("<Print>"    , spawn "gnome-screenshot -i" ) -- screenshot
 myLayout = avoidStruts (
     Tall 1 (3/100) (1/2) |||
     Mirror (Tall 1 (3/100) (1/2))) |||
-    noBorders (fullscreenFull Full)
+    noBorders (Full)
 
 myConfig = desktopConfig
     {
@@ -42,4 +41,4 @@ myConfig = desktopConfig
     `additionalKeysP` myKeys
 
 main = do
-    xmonad $ ewmh $ pagerHints $ myConfig
+    xmonad $ ewmh $ myConfig

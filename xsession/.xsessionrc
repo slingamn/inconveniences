@@ -1,7 +1,9 @@
 #!/bin/bash
 
 # hax: hardcode monitor orientation for now
-#xrandr --output HDMI-3 --primary --left-of HDMI-2
+# this version works with default settings:
+# xrandr --output HDMI-3 --primary --left-of HDMI-2
+# this version works with the TearFree=true, AccelMethod=sna, DRI=3 conf:
 xrandr --output HDMI3 --primary --left-of HDMI2
 
 sh ~/.fehbg
@@ -22,7 +24,6 @@ xset b off
 [ -f ~/.Xresources ] && xrdb -merge ~/.Xresources
 [ -f ~/.Xkbmap ] && setxkbmap $(cat ~/.Xkbmap)
 
-
-taffybar &
+lxpanel &
 
 exec xmonad
