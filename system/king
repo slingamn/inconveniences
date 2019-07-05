@@ -1,11 +1,8 @@
 ## i am the king
 ## (this file goes in /etc/sudoers.d/king)
 shivaram ALL=(ALL) NOPASSWD:/usr/sbin/shutdown
-shivaram ALL=(ALL) NOPASSWD:/usr/sbin/hwclock
-shivaram ALL=(ALL) NOPASSWD:/usr/bin/journalctl
 shivaram ALL=(ALL) NOPASSWD:/etc/bin/getupdates
 shivaram ALL=(ALL) NOPASSWD:/etc/bin/nsprotect
 
 ## (for the Ubuntu machines)
-shivaram ALL=(ALL) NOPASSWD:/sbin/hwclock
 shivaram ALL=(ALL) NOPASSWD:/sbin/shutdown
