@@ -8,8 +8,6 @@ xrandr --output HDMI3 --primary --left-of HDMI2
 
 sh ~/.fehbg
 
-pulseaudio --start
-
 autocutsel &
 autocutsel -selection PRIMARY &
 
