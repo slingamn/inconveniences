@@ -1,0 +1,3 @@
+This are config files for using stunnel to tunnel ssh connections
+inside TLS on port 443, for defeating application-level firewalls
+that detect the ssh protocol.

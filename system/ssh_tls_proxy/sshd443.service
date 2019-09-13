@@ -1,0 +1,13 @@
+[Unit]
+Description=stunnel proxy in front of the sshd
+After=network.target
+
+[Service]
+Type=simple
+User=stunnel4
+ExecStart=/usr/bin/stunnel4 /etc/stunnel/sshd443_server.conf
+ExecReload=/bin/kill -HUP $MAINPID
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
