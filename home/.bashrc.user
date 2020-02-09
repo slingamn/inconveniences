@@ -97,8 +97,9 @@ PATH=$PATH:~/bin
 
 shopt -s histappend
 HISTCONTROL=ignoreboth
-LESSOPEN=
-LESSCLOSE=
+
+export LESSOPEN=
+export LESSCLOSE=
 
 export VISUAL=/usr/bin/vim
 export EDITOR=$VISUAL
