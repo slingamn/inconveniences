@@ -23,14 +23,25 @@ alias sl='ls'
 # for when i think i'm in sftp but actually i'm in bash
 alias lcd='cd'
 
+function get_preferred_remote {
+	REMOTE=$(git remote)
+	if echo $REMOTE | grep -o "\<canon\>"; then
+		return 0
+	fi
+	if echo $REMOTE | grep -o "\<origin\>"; then
+		return 0
+	fi
+	git remote | head -n 1
+}
+
 function gitbase {
-	REMOTE=`git remote | head -n 1`
+	REMOTE=$(get_preferred_remote)
 	git merge-base HEAD $REMOTE/master
 }
 
 # "git branch diff"
 function gitbd {
-	REMOTE=`git remote | head -n 1`
+	REMOTE=$(get_preferred_remote)
 	if [ -n "$REMOTE" ]; then
 		git diff $REMOTE/master...HEAD "$@"
 	else
