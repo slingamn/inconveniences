@@ -104,7 +104,7 @@ export LESSCLOSE=
 export VISUAL=/usr/bin/vim
 export EDITOR=$VISUAL
 
-CANDIDATE_SOCK=/tmp/${USER}_personal_sock
+CANDIDATE_SOCK=/var/run/user/${UID}/personal_sock
 if [[ -z "$SSH_AUTH_SOCK" && -O "$CANDIDATE_SOCK" ]]; then
 	export SSH_AUTH_SOCK=$CANDIDATE_SOCK
 fi
