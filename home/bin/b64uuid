@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 """
 128 bits of entropy in 22 ASCII characters.
 
