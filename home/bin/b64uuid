@@ -5,11 +5,8 @@
 Doesn't match the UUID4 standard because meh.
 """
 
-from __future__ import print_function
-
-import base64
-import os
 import sys
+import secrets
 
 end = '' if '-n' in sys.argv else '\n'
-print(base64.urlsafe_b64encode(os.urandom(16)).decode('ascii').rstrip('='), end=end)
+print(secrets.token_urlsafe(16), end=end)
