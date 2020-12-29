@@ -118,6 +118,10 @@ au BufRead,BufNewFile *.go set tabstop=4
 au BufRead,BufNewFile *.go set shiftwidth=4
 au BufRead,BufNewFile *.go set noexpandtab
 
+au BufRead,BufNewFile *.rs set tabstop=4
+au BufRead,BufNewFile *.rs set shiftwidth=4
+au BufRead,BufNewFile *.rs set expandtab
+
 au BufRead,BufNewFile *.yaml set expandtab
 
 " https://stackoverflow.com/a/20418591
