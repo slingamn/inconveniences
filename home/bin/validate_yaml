@@ -1,0 +1,9 @@
+#!/usr/bin/python3
+
+import pprint, yaml, sys
+
+infile = sys.stdin
+if len(sys.argv) > 1:
+    infile = open(sys.argv[1])
+
+pprint.pprint(yaml.safe_load(infile))
