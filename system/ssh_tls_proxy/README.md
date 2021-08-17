@@ -28,12 +28,16 @@ Client-side configuration:
 e.g., `mv proxycommand ~/bin/proxycommand_ssh_in_tls`
 4. Add the following block to ~/.ssh/config:
 
-    Host my-host.domain
-        ProxyCommand ~/bin/proxycommand_ssh_in_tls %h:443
+```
+Host my-host.domain
+    ProxyCommand ~/bin/proxycommand_ssh_in_tls %h:443
+```
 
 If you don't have have a valid TLS certificate for the server, add `insecure`
 to the command (this is probably OK because you can rely on the known_hosts
 file to authenticate the actual sshd):
 
-    Host my-host.domain
-        ProxyCommand ~/bin/proxycommand_ssh_in_tls %h:443 insecure
+```
+Host my-host.domain
+    ProxyCommand ~/bin/proxycommand_ssh_in_tls %h:443 insecure
+```
